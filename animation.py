@@ -86,7 +86,8 @@ class Animation ():
 		Render the current animation frame onto the screen
 	"""
 	def render (self, screen, camera, pos):
-		screen.blit (self.sprite, (pos[0] - camera.position[0] - self.px_size, pos[1] - camera.position[1] - self.px_size), pygame.Rect (self.rect, (self.px_size, self.px_size)))
+		screen.blit (self.sprite, (pos[0] - camera.position[0] - (self.px_size / 2.0), pos[1] - camera.position[1] - self.px_size), pygame.Rect (self.rect, (self.px_size, self.px_size)))
+		#screen.blit (self.sprite, (pos[0] - camera.position[0] - self.px_size, pos[1] - camera.position[1] - self.px_size), pygame.Rect (self.rect, (self.px_size, self.px_size)))
 
 	"""
 		Did the animation sprite change?

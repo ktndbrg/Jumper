@@ -20,7 +20,7 @@ class Player ():
 		Initialize the Player object.
 	"""
 	def __init__ (self):
-		self.position = [100.0, 126.0]
+		self.position = [72.0, 72.0]
 		self.speed = [0.0, 0.0]
 		self.direction = 1
 		self.isGrounded = True
@@ -92,25 +92,24 @@ class Player ():
 		self.hp -= 1
 
 	"""
-		Just test if player has collided with object
-		object: [[topleft_x, topleft_y], [bottomright_x, bottomright_y]]
+		Just test if player has collided with item
+		item: [center_x, center_y]
 	"""
-	def collision (self, objects):
-		# Collide from x
-		if abs (self.position[0] - objects[0][0]) < (9.0 + 12):
-			return True
-		elif abs (self.position[0] - objects[1][0]) < (9.0 + 12):
-			return True
-		# Are we standing on top of it
-		if abs (self.position[1] - objects[0][1]) < (9.0 + 12):
-			self.isGrounded = True
-		elif abs (self.position[1] - objects[0][1]) < (9.0 + 12):
-			if self.speed[1] < 0.0:
+	def collision (self, item):
+		if abs (self.position[0] - item[0]) < 9.0 and abs (self.position[1] - item[1]) < 9.0:
+			# Are we standing on top of it?
+			if self.position[1] < item[1]:
 				self.speed[1] = 0.0
+				self.position[1] = item[1] - 9.0
+				self.isGrounded = True
+				return True
 			else:
-				print ("We bonked but negative speed?")
-
-		#pygame.sprite.collide_rect(left, right)
+				print ("Boink")
+				#self.speed[1] = 0.0
+				return True
+		else:
+			return False
+		
 	"""
 		Is the player in motion?
 	"""

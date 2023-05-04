@@ -4,6 +4,7 @@ import pygame
 
 import camera
 import player
+import ground
 
 """
 	Game Class
@@ -27,7 +28,10 @@ class Game ():
 		self.camera = camera.Camera (resolution, self.test_sprite)
 		
 		self.player = player.Player ()
-		self.tick = 0
+		self.block1 = ground.Ground ("gamedata/block.png", [72, 72])
+		self.block2 = ground.Ground ("gamedata/block.png", [100, 150])
+		self.block3 = ground.Ground ("gamedata/block.png", [30, 120])
+		self.block4 = ground.Ground ("gamedata/block.png", [200, 100])
 		self.clock = pygame.time.Clock ()
 		self.clock.tick (30)
 
@@ -50,7 +54,6 @@ class Game ():
 
 			# A frame has passed
 			self.clock.tick (30)
-			self.tick += 1
 
 		# Cleanup afterwards
 		pygame.quit ()
@@ -111,6 +114,13 @@ class Game ():
 		if self.keyboard["A"]:
 			self.player.jump (self.clock)
 
+		# Check for collision against blocks
+		# This should be a FOR LOOP
+		self.player.collision (self.block1.rect)
+		self.player.collision (self.block2.rect)
+		self.player.collision (self.block3.rect)
+		self.player.collision (self.block4.rect)
+
 		self.player.update (self.clock)
 		self.camera.update (self.player.position)
 
@@ -122,8 +132,15 @@ class Game ():
 		self.screen.fill (DARK_GREY)
 
 		# Background
-		self.screen.blit (self.test_sprite, (0, 0))
+		self.screen.blit (self.test_sprite, (0 - self.camera.position[0], 0 - self.camera.position[1]))
 
+		# Ground blocks
+		self.block1.render (self.screen, self.camera)
+		self.block2.render (self.screen, self.camera)
+		self.block3.render (self.screen, self.camera)
+		self.block4.render (self.screen, self.camera)
+
+		# Player
 		self.player.render (self.screen, self.camera)
 
 
