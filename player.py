@@ -96,16 +96,21 @@ class Player ():
 		item: [center_x, center_y]
 	"""
 	def collision (self, item):
-		if abs (self.position[0] - item[0]) < 9.0 and abs (self.position[1] - item[1]) < 9.0:
+		if abs (self.position[0] - item[0]) < 14.0 and abs (self.position[1] - item[1]) < 9.0+0.0:
+			if self.position[0] < item[0] and self.speed[0] > 0.0:
+				self.speed[0] = 0.0
+			elif self.position[0] > item[0] and self.speed[0] < 0.0:
+				self.speed[0] = 0.0
+			
 			# Are we standing on top of it?
 			if self.position[1] < item[1]:
 				self.speed[1] = 0.0
-				self.position[1] = item[1] - 9.0
+				self.position[1] = item[1] - (9.0 + 0.0)
 				self.isGrounded = True
 				return True
-			else:
+			elif self.position[1] > item[1] and self.speed[1] < 0.0:
 				print ("Boink")
-				#self.speed[1] = 0.0
+				self.speed[1] = 0.0
 				return True
 		else:
 			return False
